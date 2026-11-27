@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <rect width="1200" height="675" fill="#146e7a"/>
+  <circle cx="600" cy="278" r="150" fill="#fff" fill-opacity="0.92"/>
+  <path d="M550 198 690 278 550 358z" fill="#146e7a"/>
+  <text x="600" y="590" fill="#fff" font-family="system-ui, sans-serif" font-size="112" font-weight="700" text-anchor="middle">モック映像</text>
+</svg>
