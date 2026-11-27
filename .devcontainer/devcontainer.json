@@ -1,0 +1,45 @@
+{
+	"name": "TrendScan",
+	// 単一コンテナ。Docker のソケットは渡さない。
+	"build": { "dockerfile": "Dockerfile" },
+	"remoteUser": "vscode",
+	"workspaceFolder": "/workspaces/TrendScan",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/TrendScan,type=bind,consistency=cached",
+	"runArgs": ["--name", "trendscan-devcontainer", "--init", "--label", "local.ui.group=Devcontainers"],
+	// ホストで、コンテナの作成の前に実行される。専用ボリューム（無ければ作る。既にあれば何もしない）。
+	"initializeCommand": "docker volume create trendscan-claude-config >/dev/null",
+	"features": {
+		"ghcr.io/devcontainers/features/node:2": { "version": "24" }
+	},
+	"mounts": [
+		// このプロジェクト専用。Claude Code の認証情報・履歴が、他のプロジェクトと混ざらない。
+		"source=trendscan-claude-config,target=/home/vscode/.claude,type=volume",
+		// コンテナの中から、ホストで承認なしに動くファイルを書き換えられないよう、次の 3 つは読み取り専用で重ねる。変更はホストで行う。
+		//   .devcontainer         : initializeCommand（ホストで実行される）
+		//   .git/hooks            : ホストの git が実行する
+		//   .claude/settings.json : ホストの Claude Code が読む（許可・フックの定義）
+		"source=${localWorkspaceFolder}/.devcontainer,target=/workspaces/TrendScan/.devcontainer,type=bind,readonly",
+		"source=${localWorkspaceFolder}/.git/hooks,target=/workspaces/TrendScan/.git/hooks,type=bind,readonly",
+		"source=${localWorkspaceFolder}/.claude/settings.json,target=/workspaces/TrendScan/.claude/settings.json,type=bind,readonly"
+	],
+	"containerEnv": {
+		"TZ": "Asia/Tokyo",
+		"CLAUDE_CONFIG_DIR": "/home/vscode/.claude"
+	},
+	// 専用ボリュームは、新規作成直後は root 所有になりうるので、vscode が書けるようにする。
+	"postCreateCommand": {
+		"claude-volume": "sudo chown -R vscode:vscode /home/vscode/.claude",
+		"tools": "for t in node npm git curl; do command -v $t >/dev/null || echo missing: $t >&2; done; node --version"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"anthropic.claude-code",
+				// 画面の確認用（index.html を VS Code とブラウザで表示する）。
+				"ms-vscode.live-server",
+				"mhutchie.git-graph",
+				"ms-ceintl.vscode-language-pack-ja"
+			]
+		}
+	}
+}
