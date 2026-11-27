@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>TrendScan</title>
+  <meta name="description" content="プログラミング言語や AI・クラウドの順位、技術の話題、生成 AI の利用・IT と AI の導入・IT 企業の売上高などのデータをまとめて調べる、IT エンジニア向けのサイトです。">
+  <!-- 描画の前に、保存したテーマを適用する（画面が一瞬白くなるのを防ぐ） -->
+  <script>try{var t=localStorage.getItem("trendscan-theme");if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Noto+Sans+JP:wght@100..900&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">本文へ移動</a>
+
+  <div class="app">
+    <div class="app-narrow-bar">
+      <button type="button" class="app-icon-btn" id="drawer-open" aria-label="サイドパネルを開く" aria-expanded="false">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="3.5" width="15" height="13" rx="2"/><path d="M8 3.5v13"/></svg>
+      </button>
+      <span class="narrow-brand">TrendScan</span>
+    </div>
+    <button type="button" class="app-scrim" aria-hidden="true" tabindex="-1" hidden></button>
+
+    <aside class="app-sidebar" data-open="true" data-drawer="closed">
+      <button type="button" class="app-rail-open" aria-hidden="true" tabindex="-1" hidden></button>
+      <nav class="app-rail" aria-label="情報の分類">
+        <div class="app-brand-row">
+          <a href="#main" class="app-rail-btn app-rail-logo app-brand-link" data-tip="TrendScan">
+            <svg class="app-brand-icon" width="24" height="24" viewBox="1 0.5 30 30" aria-hidden="true"><g fill="currentColor"><path d="M16 0.5 L16.87 2.53 L18.9 3.4 L16.87 4.27 L16 6.3 L15.13 4.27 L13.1 3.4 L15.13 2.53Z"/><path d="M9 3.4 L9.6 4.8 L11 5.4 L9.6 6 L9 7.4 L8.4 6 L7 5.4 L8.4 4.8Z"/><path d="M23 3.4 L23.6 4.8 L25 5.4 L23.6 6 L23 7.4 L22.4 6 L21 5.4 L22.4 4.8Z"/><path d="M4.2 9.6 L4.62 10.58 L5.6 11 L4.62 11.42 L4.2 12.4 L3.78 11.42 L2.8 11 L3.78 10.58Z"/><path d="M27.8 9.6 L28.22 10.58 L29.2 11 L28.22 11.42 L27.8 12.4 L27.38 11.42 L26.4 11 L27.38 10.58Z"/></g><g transform="translate(4.16 6.3) scale(0.74)"><mask id="brand-mask-1"><rect width="32" height="32" fill="white"/><g fill="none" stroke="black" stroke-width="1.5" stroke-linecap="round"><path d="M16 19 V9.5"/><path d="M16 16.5 L11 11.5"/><path d="M16 16.5 L21 11.5"/></g></mask><g fill="currentColor" mask="url(#brand-mask-1)"><circle cx="16" cy="11.5" r="7.5"/><circle cx="9" cy="14" r="5.5"/><circle cx="23" cy="14" r="5.5"/><circle cx="11.5" cy="8" r="5"/><circle cx="20.5" cy="8" r="5"/><path d="M14 17 H18 L19.2 28.5 H12.8Z"/></g></g><path d="M7 29.4 Q16 26.6 25 29.4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span class="app-rail-label app-brand-name">TrendScan</span>
+          </a>
+          <button type="button" class="app-icon-btn" id="sidebar-close" aria-label="サイドパネルを閉じる" aria-expanded="true">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="3.5" width="15" height="13" rx="2"/><path d="M8 3.5v13"/></svg>
+          </button>
+          <button type="button" class="app-rail-btn app-rail-logo app-open-btn" id="sidebar-open" aria-label="サイドパネルを開く" aria-expanded="false" data-tip="サイドパネルを開く" hidden>
+            <svg class="app-brand-icon" width="24" height="24" viewBox="1 0.5 30 30" aria-hidden="true"><g fill="currentColor"><path d="M16 0.5 L16.87 2.53 L18.9 3.4 L16.87 4.27 L16 6.3 L15.13 4.27 L13.1 3.4 L15.13 2.53Z"/><path d="M9 3.4 L9.6 4.8 L11 5.4 L9.6 6 L9 7.4 L8.4 6 L7 5.4 L8.4 4.8Z"/><path d="M23 3.4 L23.6 4.8 L25 5.4 L23.6 6 L23 7.4 L22.4 6 L21 5.4 L22.4 4.8Z"/><path d="M4.2 9.6 L4.62 10.58 L5.6 11 L4.62 11.42 L4.2 12.4 L3.78 11.42 L2.8 11 L3.78 10.58Z"/><path d="M27.8 9.6 L28.22 10.58 L29.2 11 L28.22 11.42 L27.8 12.4 L27.38 11.42 L26.4 11 L27.38 10.58Z"/></g><g transform="translate(4.16 6.3) scale(0.74)"><mask id="brand-mask-2"><rect width="32" height="32" fill="white"/><g fill="none" stroke="black" stroke-width="1.5" stroke-linecap="round"><path d="M16 19 V9.5"/><path d="M16 16.5 L11 11.5"/><path d="M16 16.5 L21 11.5"/></g></mask><g fill="currentColor" mask="url(#brand-mask-2)"><circle cx="16" cy="11.5" r="7.5"/><circle cx="9" cy="14" r="5.5"/><circle cx="23" cy="14" r="5.5"/><circle cx="11.5" cy="8" r="5"/><circle cx="20.5" cy="8" r="5"/><path d="M14 17 H18 L19.2 28.5 H12.8Z"/></g></g><path d="M7 29.4 Q16 26.6 25 29.4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span class="app-open-icon">
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="3.5" width="15" height="13" rx="2"/><path d="M8 3.5v13"/></svg>
+            </span>
+          </button>
+        </div>
+
+        <!--
+次の 3 つのアイコンは Lucide の trophy・newspaper・chart-line。
+
+ISC License
+
+Copyright (c) 2026 Lucide Icons and Contributors
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+        -->
+        <button type="button" class="app-rail-btn" data-section="tech" data-tip="ランキング" aria-current="page">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14.66V17a1 1 0 0 1-1 1 2 2 0 0 0-2 2v2"/><path d="M14 14.66V17a1 1 0 0 0 1 1 2 2 0 0 1 2 2v2"/><path d="M17.916 10H19.5A2.5 2.5 0 0 0 22 7.5V5a1 1 0 0 0-1-1h-3"/><path d="M4 22h16"/><path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z"/><path d="M6.084 10H4.5A2.5 2.5 0 0 1 2 7.5V5a1 1 0 0 1 1-1h3"/></svg>
+          <span class="app-rail-label">ランキング</span>
+        </button>
+        <button type="button" class="app-rail-btn" data-section="topics" data-tip="トピック">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18h-5"/><path d="M18 14h-8"/><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2"/><rect width="8" height="4" x="10" y="6" rx="1"/></svg>
+          <span class="app-rail-label">トピック</span>
+        </button>
+        <button type="button" class="app-rail-btn" data-section="data" data-tip="データ">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+          <span class="app-rail-label">データ</span>
+        </button>
+      </nav>
+
+      <div class="app-rail-foot">
+        <div class="menu">
+          <div role="menu" aria-label="メニュー" class="menu-popup" id="menu-popup" hidden>
+            <div role="group" aria-label="テーマ" class="menu-theme">
+              <span aria-hidden="true">テーマ</span>
+              <span class="menu-theme-options">
+                <button type="button" role="menuitemradio" aria-checked="false" aria-label="ライト" title="ライト" class="menu-theme-option" data-theme-value="light">
+                  <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="3.2"/><path d="M10 2.5v2M10 15.5v2M2.5 10h2M15.5 10h2M4.7 4.7l1.4 1.4M13.9 13.9l1.4 1.4M4.7 15.3l1.4-1.4M13.9 6.1l1.4-1.4"/></svg>
+                </button>
+                <button type="button" role="menuitemradio" aria-checked="false" aria-label="ダーク" title="ダーク" class="menu-theme-option" data-theme-value="dark">
+                  <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16.5 11.6A6.8 6.8 0 0 1 8.4 3.5a6.8 6.8 0 1 0 8.1 8.1z"/></svg>
+                </button>
+                <button type="button" role="menuitemradio" aria-checked="true" aria-label="システム" title="システム" class="menu-theme-option" data-theme-value="system">
+                  <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="3.5" width="15" height="10" rx="1.5"/><path d="M7 17h6M10 13.5V17"/></svg>
+                </button>
+              </span>
+            </div>
+          </div>
+          <button type="button" class="menu-button" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-popup" aria-label="メニュー" data-tip="メニュー">
+            <span class="menu-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="7" r="3.2"/><path d="M3.5 17c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5"/></svg>
+            </span>
+            <span class="menu-label" aria-hidden="true">メニュー</span>
+            <span class="menu-caret" aria-hidden="true">▴</span>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <div class="app__column">
+      <main id="main" class="app__main" tabindex="-1">
+        <div class="home__tabs">
+        <div class="result-area__bar">
+          <div class="result-area__tabs" role="tablist" aria-label="ランキングの分類" data-group="tech">
+            <button type="button" role="tab" class="result-area__tab" id="tab-languages" data-tab="languages" aria-controls="tab-panel" aria-selected="true" tabindex="0">言語</button>
+            <button type="button" role="tab" class="result-area__tab" id="tab-models" data-tab="models" aria-controls="tab-panel" aria-selected="false" tabindex="-1">AI モデル</button>
+            <button type="button" role="tab" class="result-area__tab" id="tab-agents" data-tab="agents" aria-controls="tab-panel" aria-selected="false" tabindex="-1">AI エージェント</button>
+            <button type="button" role="tab" class="result-area__tab" id="tab-services" data-tab="services" aria-controls="tab-panel" aria-selected="false" tabindex="-1">AI チャット</button>
+            <button type="button" role="tab" class="result-area__tab" id="tab-companies" data-tab="companies" aria-controls="tab-panel" aria-selected="false" tabindex="-1">AI 企業</button>
+            <button type="button" role="tab" class="result-area__tab" id="tab-clouds" data-tab="clouds" aria-controls="tab-panel" aria-selected="false" tabindex="-1">クラウド</button>
+          </div>
+          <div class="result-area__tabs" role="tablist" aria-label="トピックの分類" data-group="topics" hidden>
+            <button type="button" role="tab" class="result-area__tab" id="tab-news" data-tab="news" aria-controls="tab-panel" aria-selected="true" tabindex="0">ニュース</button>
+            <button type="button" role="tab" class="result-area__tab" id="tab-keywords" data-tab="keywords" aria-controls="tab-panel" aria-selected="false" tabindex="-1">キーワード</button>
+            <button type="button" role="tab" class="result-area__tab" id="tab-qiita" data-tab="qiita" aria-controls="tab-panel" aria-selected="false" tabindex="-1">技術記事</button>
+            <button type="button" role="tab" class="result-area__tab" id="tab-video" data-tab="video" aria-controls="tab-panel" aria-selected="false" tabindex="-1">動画</button>
+          </div>
+          <div class="result-area__tabs" role="tablist" aria-label="データの分類" data-group="data" hidden>
+            <button type="button" role="tab" class="result-area__tab" id="tab-ai" data-tab="ai" aria-controls="tab-panel" aria-selected="true" tabindex="0">生成 AI</button>
+            <button type="button" role="tab" class="result-area__tab" id="tab-rates" data-tab="rates" aria-controls="tab-panel" aria-selected="false" tabindex="-1">IT・AI 導入</button>
+            <button type="button" role="tab" class="result-area__tab" id="tab-earnings" data-tab="earnings" aria-controls="tab-panel" aria-selected="false" tabindex="-1">企業の業績</button>
+          </div>
+        </div>
+        </div>
+
+        <div class="page">
+          <!-- 読み上げ用の見出し（画面には出さない） -->
+          <h1 class="visually-hidden" id="page-title">ランキング</h1>
+          <div class="page-lead" id="page-lead" hidden>
+            <h2 class="page-lead__heading" id="lead-heading" hidden></h2>
+            <p id="lead-text"></p>
+            <p class="page-lead__source" id="lead-source" hidden></p>
+          </div>
+
+          <div id="tab-panel" role="tabpanel" aria-labelledby="tab-languages">
+            <p id="status" class="visually-hidden" role="status"></p>
+
+            <!-- 解説の下のカード。中身は script.js が入れる -->
+            <div id="view-card" hidden>
+              <div class="panel">
+                <!-- カードの題と、右上のアイコンのボタン -->
+                <div class="panel-head">
+                  <h2 id="ranking-title">順位</h2>
+                  <h2 id="chart-title" hidden>推移</h2>
+                  <!-- 推移の期間と、グラフに出す値の切り替え -->
+                  <div id="period" class="period" role="group" aria-label="期間" hidden></div>
+                  <div class="panel-actions">
+                    <!-- 「データ」の内容の切り替え。data-for のタブのボタンだけを出す。アイコンは自作 -->
+                    <div id="view-switch" class="view-switch" role="group" aria-label="表示する内容" hidden>
+                      <button type="button" class="icon-button" data-for="ai" data-value="business">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.500 17V4.500A1.500 1.500 0 0 1 6 3h8a1.500 1.500 0 0 1 1.500 1.500V17M2.500 17h15M8.500 17v-3h3v3M8 6.500h.01M12 6.500h.01M8 10h.01M12 10h.01"/></svg>
+                      </button>
+                      <button type="button" class="icon-button" data-for="ai" data-value="purposes">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="7" r="3.200"/><path d="M4 16.500c.8-3 3.200-4.500 6-4.500s5.200 1.500 6 4.500"/></svg>
+                      </button>
+                      <button type="button" class="icon-button" data-for="rates earnings" data-value="domestic">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" stroke="currentColor" stroke-width="0.9" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 0.7 15.6 1.8 16.8 2.5 17.8 2.2 17.6 2.9 18.3 3.4 16.9 3.9 15.8 5.1 14.5 4.3 13.6 4.7 12.9 4.3 13.8 5.3 12.7 5.7 12.6 4.8 12.4 4.2 12.9 3.4 13.9 3.6 14.3 2.6 14.3 0.8zM13.4 6.0 13.9 6.2 13.9 7.3 14.5 8.5 13.9 10.0 13.4 10.1 13.4 11.6 13.3 13.2 12.3 14.1 12.3 13.3 11.6 13.8 11.3 14.6 10.7 14.6 9.6 14.6 9.5 14.0 9.0 14.5 9.5 15.0 8.3 16.0 7.6 15.0 7.9 14.5 7.2 14.4 6.0 14.7 5.1 14.8 4.8 15.3 3.6 15.3 4.0 14.8 5.2 13.5 5.9 13.4 6.7 13.3 7.8 13.2 8.6 13.3 9.2 12.0 9.2 11.4 9.9 11.0 9.6 11.7 10.4 11.5 11.0 11.2 11.9 10.2 12.3 9.2 12.5 8.3 12.2 7.9 12.4 7.4 12.4 6.9 12.8 6.4 13.2 6.8 13.6 6.7 13.2 6.5zM4.7 16.4 5.6 15.6 6.2 15.7 6.6 15.2 7.2 15.4 7.3 15.8 6.7 16.5 6.1 16.2 5.6 17.2 5.1 16.9zM3.2 15.7 4.0 16.0 4.2 16.5 4.2 17.0 3.7 18.2 3.7 18.7 2.9 19.3 2.5 18.9 2.5 18.0 2.8 17.1 2.0 17.3 1.7 16.4 2.7 16.0z"/></svg>
+                      </button>
+                      <button type="button" class="icon-button" data-for="rates earnings" data-value="world">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="M3 10h14M10 3c2 2 3 4.400 3 7s-1 5-3 7c-2-2-3-4.400-3-7s1-5 3-7z"/></svg>
+                      </button>
+                    </div>
+                    <!-- 順位と推移の切り替え -->
+                    <div id="view-toggle" class="view-switch" role="group" aria-label="順位と推移" hidden>
+                      <button type="button" class="icon-button" data-value="ranking">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.500 5h9M7.500 10h9M7.500 15h9M3.500 5h.01M3.500 10h.01M3.500 15h.01"/></svg>
+                      </button>
+                      <button type="button" class="icon-button" data-value="history">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3.500v13h14"/><path d="M6 12.500l3.500-4 2.500 2.500 4.500-5.500"/></svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <p id="card-note" class="note" hidden></p>
+                <div id="card-message" class="list-message" tabindex="-1" hidden>
+                  <p id="card-message-text"></p>
+                  <button type="button" class="btn btn--small" id="retry-button" hidden>もう一度読み込む</button>
+                </div>
+
+                <!-- ニュースと動画のリンクの一覧 -->
+                <ul id="link-list" class="news-list" hidden></ul>
+
+                <div id="ranking-panel">
+                <div class="table-scroll">
+                  <table class="ranking" id="ranking-table">
+                    <thead>
+                      <tr id="ranking-head"></tr>
+                    </thead>
+                    <tbody id="ranking-body"></tbody>
+                  </table>
+                </div>
+                <!-- 表の下の注記 -->
+                <p class="note table-note" id="table-note" hidden></p>
+                </div>
+
+                <div id="history-panel" hidden>
+                <div id="chart" class="chart"></div>
+                <div id="legend" class="legend" role="group" aria-label="グラフに表示する名前"></div>
+                <p class="note legend-note" id="legend-note" hidden></p>
+                <details class="table-view">
+                  <summary>推移を表で見る</summary>
+                  <div class="table-scroll">
+                    <table id="history-table"></table>
+                  </div>
+                </details>
+                </div>
+              </div>
+              <!-- 「データ」のタブの注意書き -->
+              <p class="page-notice" id="page-notice" hidden></p>
+            </div>
+
+            <noscript>
+              <p class="panel">結果の表示には JavaScript が必要です。ブラウザーの設定で有効にしてください。</p>
+            </noscript>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="frame.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
